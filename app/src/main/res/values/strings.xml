@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Concession</string>
+
+    <!--strings for login page-->
+    <string name="emailid">Email Id</string>
+    <string name="password">Password</string>
+    <string name="forgetpass">Forgot Password?</string>
+    <string name="sigin">Sign In</string>
+    <string name="signup">Sign Up</string>
+
+    <!--strings for login page-->
+    <string name="cnfrmpass">Confirm Password</string>
+    <string name="register">Register</string>
+
 </resources>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterPage"
+    android:background="@color/extremeTransparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal">
+
+        <EditText
+            android:id="@+id/emailidtxt"
+            android:layout_width="339dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:autofillHints="@string/emailid"
+            android:background="@drawable/unbck"
+            android:hint="@string/emailid"
+            android:inputType="textEmailAddress"
+            android:paddingStart="50dp"
+            android:paddingLeft="50dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:textColor="@color/shadeMatching1"
+            android:textSize="17sp" />
+
+        <EditText
+            android:layout_width="335dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/shadeMatching1"
+            android:autofillHints="@string/password"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textSize="17sp"
+            android:id="@+id/passwordtxt"
+            android:background="@drawable/passbck"
+            android:paddingStart="50dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="0dp"
+            android:paddingEnd="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            />
+
+        <EditText
+            android:layout_width="335dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/shadeMatching1"
+            android:autofillHints="@string/cnfrmpass"
+            android:hint="@string/cnfrmpass"
+            android:inputType="textPassword"
+            android:textSize="17sp"
+            android:id="@+id/cnfrmpasswordtxt"
+            android:background="@drawable/passbck"
+            android:paddingStart="50dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="0dp"
+            android:paddingEnd="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            />
+
+        <Button
+            android:background="@color/midaccentcolor"
+            android:text="@string/register"
+            android:textColor="@color/colorTransparentWhite"
+            android:id="@+id/registerbtn"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:elevation="4dp"/>
+
+    </LinearLayout>
+
+</>

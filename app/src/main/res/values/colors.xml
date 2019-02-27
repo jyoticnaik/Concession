@@ -5,4 +5,21 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorTransparentWhite">#CCCCCC</color>
+    <color name="extremeTransparent">#36CCCCCC</color>
+
+
+    <!--Custom colors for app-->
+    <color name="endcolor">#00695C</color>
+    <color name="accentcolor">#272541</color>
+    <color name="midaccentcolor">#0B2C2C</color>
+    <color name="actionBarBackground">#2D3142</color><!--GunMetal-->
+    <color name="shadeMatching1">#E4263536</color><!--GunMetal-->
+    <color name="shadeMatching2">#5D5D5D</color><!--Ebony-->
+    <color name="shadeMatching3">#A05331</color><!--Chestnut-->
+    <color name="shadeMatching4">#1D222B</color><!--Dark GunMetal-->
+    <color name="shadeMatching5">#D05353</color><!--Dark Terra Cota-->
+    <color name="shadeMatching6">#F39C6B</color><!--Pink Orange-->
+    <color name="shadeMatching7">#732C2C</color><!--Wine-->
+    <color name="shadeMatching8">#420C14</color><!--Dark Seinna-->
+    <color name="shadesaffron">#D9F4AC32</color><!--Saffron-->
 </resources>

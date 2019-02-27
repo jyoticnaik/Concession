@@ -1,9 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LoginPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginPage">
+    android:background="@drawable/custombck">
 
-</android.support.constraint.ConstraintLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_horizontal">
+
+    <EditText
+        android:id="@+id/emailidtxt"
+        android:layout_width="339dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:autofillHints="@string/emailid"
+        android:background="@drawable/unbck"
+        android:hint="@string/emailid"
+        android:inputType="textEmailAddress"
+        android:paddingStart="50dp"
+        android:paddingLeft="50dp"
+        android:paddingEnd="0dp"
+        android:paddingRight="0dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp" />
+
+    <EditText
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:autofillHints="@string/password"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textSize="17sp"
+        android:id="@+id/passwordtxt"
+        android:background="@drawable/passbck"
+        android:paddingStart="50dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="0dp"
+        android:paddingEnd="0dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        />
+
+    <TextView
+        android:text="@string/forgetpass"
+        android:textSize="15sp"
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/fpasstxt"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_gravity="end"/>
+
+    <Button
+        android:background="@color/midaccentcolor"
+        android:text="@string/sigin"
+        android:textColor="@color/colorTransparentWhite"
+        android:id="@+id/signinbtn"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:elevation="4dp"/>
+    <TextView
+        android:id="@+id/signuptxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/signup"
+        android:textColor="#FFFFFF"
+        android:paddingBottom="10dp"/>
+
+</LinearLayout>
+</LinearLayout>
