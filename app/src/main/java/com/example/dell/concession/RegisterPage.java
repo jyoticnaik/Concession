@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -79,6 +80,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                         progressDialog.dismiss();
                         Toast.makeText(RegisterPage.this, "Registration successful", Toast.LENGTH_SHORT).show();
                         //userref.child(firebaseAuth.getCurrentUser().getUid()).child("EmailId").setValue(email);
+                        finish();
                         startActivity(new Intent(RegisterPage.this,LoginPage.class));
                     }
                     else{

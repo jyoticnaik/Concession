@@ -2,6 +2,8 @@
     <string name="app_name">Concession</string>
 
     <string name="icon_text">Concession</string>
+    <string name="back">BACK</string>
+    <string name="instruction">INSTRUCTIONS</string>
 
     <!--strings for login page-->
     <string name="emailid">Email Id</string>

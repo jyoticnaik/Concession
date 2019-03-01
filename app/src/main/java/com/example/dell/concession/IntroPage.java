@@ -29,11 +29,11 @@ public class IntroPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro_page);
 
-        slideViewPager=(ViewPager)findViewById(R.id.slideViewPage);
-        dotLayout=(LinearLayout)findViewById(R.id.dots);
+        slideViewPager=findViewById(R.id.slideViewPage);
+        dotLayout=findViewById(R.id.dots);
 
-        BackBtn=(Button)findViewById(R.id.prevbutton);
-        NextBtn=(Button)findViewById(R.id.nextbutton);
+        BackBtn=findViewById(R.id.prevbutton);
+        NextBtn=findViewById(R.id.nextbutton);
 
         sliderAdapter=new SliderAdapter(this);
         slideViewPager.setAdapter(sliderAdapter);
@@ -92,6 +92,15 @@ public class IntroPage extends AppCompatActivity {
                 BackBtn.setVisibility(View.INVISIBLE);
 
                 NextBtn.setText("Skip");
+                NextBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                        Intent intent=new Intent(IntroPage.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
                 BackBtn.setText("");
             }else if(i==mDots.length-1){
                 NextBtn.setEnabled(true);
@@ -102,6 +111,7 @@ public class IntroPage extends AppCompatActivity {
                 NextBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        finish();
                         Intent intent=new Intent(IntroPage.this,MainActivity.class);
                         startActivity(intent);
                     }
@@ -113,6 +123,15 @@ public class IntroPage extends AppCompatActivity {
                 BackBtn.setVisibility(View.VISIBLE);
 
                 NextBtn.setText("Skip");
+                NextBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                        Intent intent=new Intent(IntroPage.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
                 BackBtn.setText("Back");
             }
 

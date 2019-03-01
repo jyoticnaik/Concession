@@ -3,7 +3,6 @@ package com.example.dell.concession;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,20 +10,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import com.example.dell.concession.Storage;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -36,9 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
-    private Button next_button,scan_button,view_button;
-    private String uid,name,gender,yearOfBirth;
-    private Storage storage;
+    private Button next_button,scan_button;
+    private String uid=" Not Available ",name=" Not Available ",gender=" Not Available ",yearOfBirth=" Not Available ";
+
+    DatabaseReference rootref= FirebaseDatabase.getInstance().getReference();
 
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
@@ -57,13 +52,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        //user=firebaseAuth.getCurrentUser();
+        user=firebaseAuth.getCurrentUser();
 
-        //storage=new Storage(this);
         scan_button=findViewById(R.id.scan_aadhaar);
-        view_button=findViewById(R.id.view_aadhaar);
         next_button=findViewById(R.id.next_button);
 
+
+        scan_button.setOnClickListener(this);
         next_button.setOnClickListener(this);
 
     }
@@ -74,11 +69,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             scan_aadhaar_click();
         }
 
-        if(v==view_button){
-            //view_button code
-        }
         if (v==next_button){
-            startActivity(new Intent(this,FormActivity.class));
+            Intent i=new Intent(this,FormActivity.class)
+                    .putExtra("u_id",uid)
+                    .putExtra("name",name)
+                    .putExtra("gender",gender)
+                    .putExtra("yob",yearOfBirth);
+
+            startActivity(i);
         }
 
     }
@@ -86,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void scan_aadhaar_click(){
 
+        Log.d("MainActivity: ","Inside scan_aadhar_click()");
         // we need to check if the user has granted the camera permissions
         // otherwise scanner will not work
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
             return;
         }
-
 
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
@@ -110,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (scanningResult != null) {
             //we have a result
             String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
+            //String scanFormat = scanningResult.getFormatName();
 
             // process received data
             if(scanContent != null && !scanContent.isEmpty()){
@@ -155,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // year of birth
                     yearOfBirth = parser.getAttributeValue(null,DataAttributes.AADHAR_YOB_ATTR);
 
+                    saveData(uid,name,gender,yearOfBirth);
+
                     Intent i=new Intent(this,FormActivity.class)
                             .putExtra("u_id",uid)
                             .putExtra("name",name)
@@ -182,45 +182,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-   /* public void saveData(View view){
-        // We are going to use json to save our data
-        // create json object
-        JSONObject aadhaarData = new JSONObject();
-        try {
-            aadhaarData.put(DataAttributes.AADHAR_UID_ATTR, uid);
-
-            if(name == null){name = "";}
-            aadhaarData.put(DataAttributes.AADHAR_NAME_ATTR, name);
-
-            if(gender == null){gender = "";}
-            aadhaarData.put(DataAttributes.AADHAR_GENDER_ATTR, gender);
-
-            if(yearOfBirth == null){yearOfBirth = "";}
-            aadhaarData.put(DataAttributes.AADHAR_YOB_ATTR, yearOfBirth);
-
-
-            // read data from storage
-            String storageData = storage.readFromFile();
-
-            JSONArray storageDataArray;
-            //check if file is empty
-            if(storageData.length() > 0){
-                storageDataArray = new JSONArray(storageData);
-            }else{
-                storageDataArray = new JSONArray();
-            }
-
-
-            // add the aadhaar data
-            storageDataArray.put(aadhaarData);
-            // save the aadhaardata
-            storage.writeToFile(storageDataArray.toString());
-
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }*/
-
-
+    public void saveData(String uid,String name,String gender,String yearOfBirth){
+        UserInformation userInformation=new UserInformation(uid,name,gender,yearOfBirth);
+        rootref.child(user.getUid()).setValue(userInformation);
+    }
 }

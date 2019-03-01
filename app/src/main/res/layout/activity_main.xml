@@ -75,43 +75,8 @@
             android:background="@color/colorTransparentWhite"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/view_aadhaar_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        <LinearLayout
         android:layout_below="@id/scan_aadhaar_wrapper"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/card_cust_style"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:orientation="horizontal"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:src="@drawable/list_of_thumbnails"
-            android:layout_weight="1"
-            />
-        <Button
-            android:id="@+id/view_aadhaar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/view_saved"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:background="@color/colorTransparentWhite"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@id/view_aadhaar_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
