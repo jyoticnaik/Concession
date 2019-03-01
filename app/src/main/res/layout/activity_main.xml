@@ -63,7 +63,8 @@
             android:src="@drawable/qr_code"
             android:layout_weight="1"
             />
-        <TextView
+        <Button
+            android:id="@+id/scan_aadhaar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -97,7 +98,8 @@
             android:src="@drawable/list_of_thumbnails"
             android:layout_weight="1"
             />
-        <TextView
+        <Button
+            android:id="@+id/view_aadhaar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -114,6 +116,7 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/next"

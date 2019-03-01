@@ -1,7 +1,11 @@
 package com.example.dell.concession;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +20,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import com.example.dell.concession.Storage;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -27,34 +36,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
-    private LinearLayout scan_button,view_button;
-    private Button next_button;
+    private Button next_button,scan_button,view_button;
     private String uid,name,gender,yearOfBirth;
+    private Storage storage;
+
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        firebaseAuth=FirebaseAuth.getInstance();
+
         if (firebaseAuth.getCurrentUser()==null){
             //Checking if user has registered. If not then the scanning page will not be displayed.
             finish();
-            startActivity(new Intent(this,LoginPage.class));
+            Toast.makeText(this, "Please Login First!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginPage.class));
+
         }
 
-        user=firebaseAuth.getCurrentUser();
+        //user=firebaseAuth.getCurrentUser();
 
-        scan_button=findViewById(R.id.scan_aadhaar_wrapper);
-        view_button=findViewById(R.id.view_aadhaar_wrapper);
-        next_button=findViewById(R.id.nextbutton);
+        //storage=new Storage(this);
+        scan_button=findViewById(R.id.scan_aadhaar);
+        view_button=findViewById(R.id.view_aadhaar);
+        next_button=findViewById(R.id.next_button);
 
-        scan_button.setOnClickListener(this);
-        view_button.setOnClickListener(this);
         next_button.setOnClickListener(this);
 
     }
 
-    public void scan_aadhaar(){
+    @Override
+    public void onClick(View v) {
+        if(v==scan_button){
+            scan_aadhaar_click();
+        }
+
+        if(v==view_button){
+            //view_button code
+        }
+        if (v==next_button){
+            startActivity(new Intent(this,FormActivity.class));
+        }
+
+    }
+
+
+    public void scan_aadhaar_click(){
+
+        // we need to check if the user has granted the camera permissions
+        // otherwise scanner will not work
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+            return;
+        }
+
+
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         integrator.setPrompt("Scan a Aadharcard QR Code");
@@ -140,20 +180,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-    @Override
-    public void onClick(View v) {
 
-        if(v==scan_button){
-            scan_aadhaar();
-        }
-        if (v==view_button){
-            //function to be made
-        }
-        if (v==next_button){
-            startActivity(new Intent(this,FormActivity.class));
-        }
+   /* public void saveData(View view){
+        // We are going to use json to save our data
+        // create json object
+        JSONObject aadhaarData = new JSONObject();
+        try {
+            aadhaarData.put(DataAttributes.AADHAR_UID_ATTR, uid);
 
-    }
+            if(name == null){name = "";}
+            aadhaarData.put(DataAttributes.AADHAR_NAME_ATTR, name);
+
+            if(gender == null){gender = "";}
+            aadhaarData.put(DataAttributes.AADHAR_GENDER_ATTR, gender);
+
+            if(yearOfBirth == null){yearOfBirth = "";}
+            aadhaarData.put(DataAttributes.AADHAR_YOB_ATTR, yearOfBirth);
+
+
+            // read data from storage
+            String storageData = storage.readFromFile();
+
+            JSONArray storageDataArray;
+            //check if file is empty
+            if(storageData.length() > 0){
+                storageDataArray = new JSONArray(storageData);
+            }else{
+                storageDataArray = new JSONArray();
+            }
+
+
+            // add the aadhaar data
+            storageDataArray.put(aadhaarData);
+            // save the aadhaardata
+            storage.writeToFile(storageDataArray.toString());
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }*/
+
+
 }
