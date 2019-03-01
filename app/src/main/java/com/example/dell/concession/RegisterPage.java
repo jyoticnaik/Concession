@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,12 +26,17 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
 
+    DatabaseReference rootref= FirebaseDatabase.getInstance().getReference();
+    DatabaseReference userref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
 
         firebaseAuth=FirebaseAuth.getInstance();
+
+        userref=rootref.child("User").child("Student");
 
         progressDialog=new ProgressDialog(this);
 
@@ -42,7 +49,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
     }
 
     private void userRegister(){
-        String email=emailid.getText().toString().trim();
+        final String email=emailid.getText().toString().trim();
         String pass=password.getText().toString().trim();
         String cnfrmpass=confirmpassword.getText().toString().trim();
 
@@ -71,6 +78,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                     if (task.isSuccessful()){
                         progressDialog.dismiss();
                         Toast.makeText(RegisterPage.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                        //userref.child(firebaseAuth.getCurrentUser().getUid()).child("EmailId").setValue(email);
                         startActivity(new Intent(RegisterPage.this,LoginPage.class));
                     }
                     else{

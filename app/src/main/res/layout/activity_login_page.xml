@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LoginPage"
     android:layout_width="match_parent"
@@ -13,6 +14,15 @@
     android:orientation="vertical"
     android:layout_gravity="center_vertical"
     android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/icon_text"
+        android:textColor="#000000"
+        android:textSize="50sp"
+        app:fontFamily="cursive" />
 
     <EditText
         android:id="@+id/emailidtxt"
@@ -85,7 +95,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_gravity="center"
         android:elevation="4dp"/>
     <TextView
