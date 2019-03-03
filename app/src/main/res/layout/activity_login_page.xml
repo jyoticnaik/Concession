@@ -40,11 +40,11 @@
         android:hint="@string/emailid"
         android:inputType="textEmailAddress"
         android:paddingStart="50dp"
-        android:paddingLeft="50dp"
+        android:paddingLeft="10dp"
         android:paddingEnd="0dp"
         android:paddingRight="0dp"
         android:textColor="@color/colorWhite"
-        android:textSize="17sp" />
+        android:textSize="16sp" />
 
     <EditText
         android:layout_width="335dp"
@@ -53,20 +53,15 @@
         android:autofillHints="@string/password"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:id="@+id/passwordtxt"
         android:background="@drawable/passbck"
         android:paddingStart="50dp"
-        android:paddingLeft="50dp"
+        android:paddingLeft="10dp"
         android:paddingRight="0dp"
         android:paddingEnd="0dp"
         android:layout_gravity="center"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"
         />
 
     <TextView
@@ -75,8 +70,6 @@
         android:layout_width="123dp"
         android:layout_height="wrap_content"
         android:id="@+id/fpasstxt"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
@@ -95,7 +88,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:layout_gravity="center"
         android:elevation="4dp"/>
     <TextView

@@ -18,6 +18,7 @@
 
     <!--For MainActivity/Aadhaar Card Scanning Page-->
     <string name="scan_aadhaar">SCAN AADHAAR CARD</string>
+    <string name="click_scan_aadhaar">CLICK HERE TO SCAN AADHAAR CARD</string>
     <string name="welcome_msg">Scan your aadhar card here.</string>
     <string name="scan_new">Scan New Aadhaar Card</string>
     <string name="view_saved">View Saved Aadhaar Details</string>
@@ -28,6 +29,40 @@
     <string name="name">Name</string>
     <string name="gender">Gender</string>
     <string name="year_of_birth">Year of Birth</string>
+    <string name="birthdate">Date of Birth</string>
     <string name="address">Address</string>
+    <string name="course">Course</string>
+    <string name="year">Year</string>
+    <string name="save">SAVE</string>
+
+    <!--For DropDown/Spinner in FromActivity-->
+    <string-array name="course_list">
+        <item>MCA</item>
+        <item>BSC</item>
+        <item>MSC</item>
+    </string-array>
+
+    <string-array name="year_list">
+        <item>FY</item>
+        <item>SY</item>
+        <item>TY</item>
+    </string-array>
+
+    <!--ConcessionFillActivity-->
+    <string name="passint">Pass Interval</string>
+    <string-array name="passint_list">
+        <item>Monthly</item>
+        <item>Quaterly</item>
+    </string-array>
+    <string name="dest">Destination</string>
+    <string name="source">Source</string>
+    <string name="prestartdate">Previous Pass Start Date</string>
+    <string name="preenddate">Previous Pass End Date</string>
+    <string name="condate">Concession Date</string>
+    <string name="clgdest">Santacruz</string>
+
+    <!--ConfirmActivity-->
+    <string name="cancle">CANCLE</string>
+    <string name="confirm">CONFIRM</string>
 
 </resources>

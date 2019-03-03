@@ -43,7 +43,7 @@
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:textColor="@color/shadeMatching1"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:layout_width="335dp"
@@ -52,7 +52,7 @@
             android:autofillHints="@string/password"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:id="@+id/passwordtxt"
             android:background="@drawable/passbck"
             android:paddingStart="50dp"
@@ -75,7 +75,7 @@
             android:autofillHints="@string/cnfrmpass"
             android:hint="@string/cnfrmpass"
             android:inputType="textPassword"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:id="@+id/cnfrmpasswordtxt"
             android:background="@drawable/passbck"
             android:paddingStart="50dp"
@@ -103,8 +103,8 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            android:textSize="14sp"
             android:layout_gravity="center"
             android:elevation="4dp"/>
 

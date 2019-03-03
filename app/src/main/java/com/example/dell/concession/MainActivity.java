@@ -67,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v==scan_button){
             scan_aadhaar_click();
-        }
-
-        if (v==next_button){
             Intent i=new Intent(this,FormActivity.class)
                     .putExtra("u_id",uid)
                     .putExtra("name",name)
@@ -77,6 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .putExtra("yob",yearOfBirth);
 
             startActivity(i);
+        }
+
+        if (v==next_button){
+            startActivity(new Intent(this,ConcessionFillActivity.class));
         }
 
     }
