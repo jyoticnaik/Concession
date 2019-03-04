@@ -16,8 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button next_button,scan_button;
     private String uid=" Not Available ",name=" Not Available ",gender=" Not Available ",yearOfBirth=" Not Available ";
 
-    DatabaseReference rootref= FirebaseDatabase.getInstance().getReference();
 
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
@@ -156,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // year of birth
                     yearOfBirth = parser.getAttributeValue(null,DataAttributes.AADHAR_YOB_ATTR);
 
-                    saveData(uid,name,gender,yearOfBirth);
+                    //saveData(uid,name,gender,yearOfBirth);
 
                     Intent i=new Intent(this,FormActivity.class)
                             .putExtra("u_id",uid)
@@ -185,10 +183,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void saveData(String uid,String name,String gender,String yearOfBirth){
+    /*public void saveData(String uid,String name,String gender,String yearOfBirth){
         UserInformation userInformation=new UserInformation(uid,name,gender,yearOfBirth);
         rootref.child(user.getUid()).setValue(userInformation);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -6,18 +6,22 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,8 +31,8 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
 
-    DatabaseReference rootref= FirebaseDatabase.getInstance().getReference();
-    DatabaseReference userref;
+    private FirebaseFirestore con_db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,8 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        userref=rootref.child("User").child("Student");
+        // Access a Cloud Firestore instance from your Activity
+        con_db= FirebaseFirestore.getInstance();
 
         progressDialog=new ProgressDialog(this);
 
@@ -80,7 +85,6 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                     if (task.isSuccessful()){
                         progressDialog.dismiss();
                         Toast.makeText(RegisterPage.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                        //userref.child(firebaseAuth.getCurrentUser().getUid()).child("EmailId").setValue(email);
                         finish();
                         startActivity(new Intent(RegisterPage.this,LoginPage.class));
                     }
