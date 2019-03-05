@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
             Toast.makeText(this, "Please Login First!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginPage.class));
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
         }
 
@@ -67,17 +68,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v==scan_button){
             scan_aadhaar_click();
-            Intent i=new Intent(this,FormActivity.class)
-                    .putExtra("u_id",uid)
-                    .putExtra("name",name)
-                    .putExtra("gender",gender)
-                    .putExtra("yob",yearOfBirth);
-
-            startActivity(i);
         }
 
         if (v==next_button){
             startActivity(new Intent(this,ConcessionFillActivity.class));
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         }
 
     }
@@ -100,6 +95,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         integrator.setResultDisplayDuration(500);
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.initiateScan();
+
+        Intent i=new Intent(this,FormActivity.class)
+                .putExtra("u_id",uid)
+                .putExtra("name",name)
+                .putExtra("gender",gender)
+                .putExtra("yob",yearOfBirth);
+
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

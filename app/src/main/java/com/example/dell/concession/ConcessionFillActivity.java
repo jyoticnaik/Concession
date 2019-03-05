@@ -61,6 +61,12 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         next.setOnClickListener(this);
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
     private Boolean hasValidationErrors(String val_source,String val_startdate,String val_enddate,String val_condate){
 
         if(val_source.isEmpty()){
@@ -118,7 +124,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         ConcessionDetails cd=new ConcessionDetails(passInterval_string,destination_string,source_string,ppsd_string,pped_string,condate_string);
         String student_id=new StudentDetails().getId();
 
-        db_concessionDetails=con_db.collection("Students").document(student_id).collection("ConcessionDetails");
+        db_concessionDetails=con_db.collection("ConcessionDetails");
         db_concessionDetails.add(cd)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -172,6 +178,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
             if(!hasValidationErrors(source.getText().toString(),startDate.getText().toString(),endDate.getText().toString(),conDate.getText().toString())) {
                 saveData();
                 startActivity(new Intent(this, ConfirmActivity.class));
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         }
     }

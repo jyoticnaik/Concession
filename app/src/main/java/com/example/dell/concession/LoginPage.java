@@ -34,7 +34,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-        getActionBar().hide();
+        //getActionBar().hide();
 
         firebaseAuth=FirebaseAuth.getInstance();
 
@@ -49,6 +49,12 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         signin.setOnClickListener(this);
         sigup.setOnClickListener(this);
         forgetpassword.setOnClickListener(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     private void userLogin(){
@@ -107,6 +113,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         }
         if(v==sigup){
             startActivity(new Intent(this,RegisterPage.class));
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         }
         if (v==forgetpassword){
             forgetpasswordHandler();

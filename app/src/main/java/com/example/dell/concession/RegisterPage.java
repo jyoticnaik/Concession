@@ -38,7 +38,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
-        getActionBar().hide();
+        //getActionBar().hide();
 
         firebaseAuth=FirebaseAuth.getInstance();
 
@@ -53,6 +53,12 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
         register=findViewById(R.id.registerbtn);
 
         register.setOnClickListener(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     private void userRegister(){

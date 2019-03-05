@@ -75,8 +75,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
 
         save_detail=findViewById(R.id.save_details);
 
-
-
         courseS=findViewById(R.id.course_spinner);
         yearS=findViewById(R.id.year_spinner);
         ArrayAdapter<String> courseAdapter=new ArrayAdapter<>(this,
@@ -86,7 +84,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.year_list));
         courseS.setAdapter(courseAdapter);
         yearS.setAdapter(yearAdapter);
-
 
 
         Bundle bundle = this.getIntent().getExtras();
@@ -106,17 +103,13 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             year_of_birth.setText(yob_string);
         }
 
-
-        birthdate.setOnClickListener(this);
-        dateSetListener=new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date=dayOfMonth+"/"+month+"/"+year;
-                birthdate.setText(date);
-            }
-        };
-
         save_detail.setOnClickListener(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     private Boolean hasValidationErrors(String dob,String addr){
@@ -159,23 +152,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void birthdateCode(){
-        Calendar cal=Calendar.getInstance();
-        int month=cal.get(Calendar.MONTH);
-        int day=cal.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dialog=new DatePickerDialog(FormActivity.this,
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener,
-                Integer.parseInt(yob_string),month,day);
-
-
-        try {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-        }
-        catch (NullPointerException ne)
-        {
-            Log.d("FormActivity","setBackgroundDrawable may have produced null pointer exception");
-        }
     }
 
     @Override
@@ -185,10 +162,36 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 saveProfile();
                 finish();
                 startActivity(new Intent(this,MainActivity.class));
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         }
         if(v==birthdate){
-            birthdateCode();
+            birthdate.setOnClickListener(this);
+            dateSetListener=new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    String date=dayOfMonth+"/"+month+"/"+year;
+                    birthdate.setText(date);
+                }
+            };
+            Calendar cal=Calendar.getInstance();
+            int month=cal.get(Calendar.MONTH);
+            int day=cal.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog dialog=new DatePickerDialog(FormActivity.this,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener,
+                    Integer.parseInt(yob_string),month,day);
+
+
+            try {
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+            catch (NullPointerException ne)
+            {
+                Log.d("FormActivity","setBackgroundDrawable may have produced null pointer exception");
+            }
+            //birthdateCode();
         }
     }
 }
