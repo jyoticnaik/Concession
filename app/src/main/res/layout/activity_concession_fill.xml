@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ConcessionFillActivity"
-    android:orientation="vertical"
     tools:ignore="contentDescription">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <ImageView
         android:layout_width="171dp"
@@ -135,4 +139,6 @@
         android:textColor="@color/not_too_white"
         android:layout_marginTop="30dp"/>
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

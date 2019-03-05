@@ -183,6 +183,8 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         if(v==save_detail){
             if(!hasValidationErrors(birthdate.getText().toString(),address.getText().toString())) {
                 saveProfile();
+                finish();
+                startActivity(new Intent(this,MainActivity.class));
             }
         }
         if(v==birthdate){
