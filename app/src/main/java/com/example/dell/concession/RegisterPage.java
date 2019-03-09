@@ -95,7 +95,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(RegisterPage.this,LoginPage.class));
                     }
                     else{
-                        String msg=task.getException().getLocalizedMessage();
+                        String msg=task.getException().getMessage();
                         Toast.makeText(RegisterPage.this, "Registration Unsuccessful: "+msg+" Please try again!", Toast.LENGTH_SHORT).show();
                     }
                 }

@@ -33,8 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser user;
     private Button next_button,scan_button;
     private String uid=" Not Available ",name=" Not Available ",gender=" Not Available ",yearOfBirth=" Not Available ";
+    private String address,pincode;
 
-    private DatabaseHelper myDB;
+    private DatabaseHelper myDB=new DatabaseHelper(MainActivity.this);
 
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .putExtra("yob",yearOfBirth);
 
         startActivity(i);*/
+
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
@@ -160,7 +162,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // year of birth
                     yearOfBirth = parser.getAttributeValue(null,DataAttributes.AADHAR_YOB_ATTR);
 
-                    addDataToDatabase();
+                    address = parser.getAttributeValue(null,DataAttributes.AADHAR_HOUSE_ATTR) +", "
+                            + parser.getAttributeValue(null,DataAttributes.AADHAR_STREET_ATTR)
+                            + parser.getAttributeValue(null,DataAttributes.AADHAR_VTC_ATTR) +", District: "
+                            + parser.getAttributeValue(null,DataAttributes.AADHAR_DIST_ATTR) +", SubDistrict: "
+                            + parser.getAttributeValue(null,DataAttributes.AADHAR_SUBDIST_ATTR) +", State: "
+                            + parser.getAttributeValue(null,DataAttributes.AADHAR_STATE_ATTR);
+
+                    pincode = parser.getAttributeValue(null,DataAttributes.AADHAR_PC_ATTR);
+
+                    Log.d("MainActivity",address);
+
+                    addDataToDatabase(uid,name,gender,yearOfBirth,address,pincode);
 
                     startActivity(new Intent(MainActivity.this,FormActivity.class));
 
@@ -182,8 +195,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void addDataToDatabase(){
-        boolean insertionSucessful = myDB.insertData(uid,name,gender,yearOfBirth);
+    public void addDataToDatabase(String s_uid,String s_name,String s_gender,String s_yearOfBirth,String s_address,String s_pincode){
+        boolean insertionSucessful = myDB.insertData(s_uid,s_name,s_gender,s_yearOfBirth,s_address,s_pincode);
         if(insertionSucessful)
             Log.d("addDataToDatabase()","INSERTION SUCCESSFUL");
         else

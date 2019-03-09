@@ -6,11 +6,14 @@ public class DataAttributes {
             AADHAR_UID_ATTR = "uid",
             AADHAR_NAME_ATTR = "name",
             AADHAR_GENDER_ATTR = "gender",
-            AADHAR_YOB_ATTR = "yob";
-            //AADHAR_CO_ATTR = "co",
-            //AADHAR_VTC_ATTR = "vtc",
-           // AADHAR_PO_ATTR = "po",
-            //AADHAR_DIST_ATTR = "dist",
-            //AADHAR_STATE_ATTR = "state",
-            //AADHAR_PC_ATTR = "pc";
+            AADHAR_YOB_ATTR = "yob",
+            AADHAR_HOUSE_ATTR = "house",
+            AADHAR_STREET_ATTR = "street",
+            //AADHAR_LM_ATTR="lm",
+            AADHAR_VTC_ATTR="vtc",
+            //AADHAR_PO_ATTR = "po",
+            AADHAR_DIST_ATTR = "dist",
+            AADHAR_SUBDIST_ATTR= "subdist",
+            AADHAR_STATE_ATTR = "state",
+            AADHAR_PC_ATTR = "pc";
 }

@@ -32,8 +32,8 @@ import java.util.Calendar;
 
 public class FormActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText uid,name,gender,year_of_birth,address,email_id;
-    private String uid_string,name_string,gender_string,yob_string;
+    private EditText uid,name,gender,year_of_birth,address,pincode,email_id;
+    private String uid_string,name_string,gender_string,yob_string,address_string,pincode_string;
     private Button save_detail;
     private Spinner courseS,yearS;
 
@@ -45,7 +45,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseFirestore con_db;
     private CollectionReference db_studentDetails;
 
-    private DatabaseHelper myDB;
+    private DatabaseHelper myDB = new DatabaseHelper(FormActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         birthdate=findViewById(R.id.dob_textview);
         birthdate_Code();
         address=findViewById(R.id.address_edittext);
-
+        pincode=findViewById(R.id.pincode_edittext);
 
         email_id=findViewById(R.id.email_edittext);
         email_id.setText(firebaseAuth.getCurrentUser().getEmail());
@@ -112,6 +112,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         dateSetListener=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month=month+1;
                 String date=dayOfMonth+"/"+month+"/"+year;
                 birthdate.setText(date);
             }
@@ -128,15 +129,23 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             year_of_birth.setText(R.string.NA);
         }
         else {
-            uid_string = res.getString(0);
-            name_string = res.getString(1);
-            gender_string = res.getString(2);
-            yob_string = res.getString(3);
+            while (res.moveToNext()) {
+                Log.d("FormActivity", " " + res.getString(0));
+                uid_string = res.getString(0);
+                name_string = res.getString(1);
+                gender_string = res.getString(2);
+                yob_string = res.getString(3);
+                address_string = res.getString(4);
+                pincode_string = res.getString(5);
+            }
 
+            Log.d("FormActivity"," "+uid_string+" "+name_string+" "+gender_string+" "+yob_string);
             uid.setText(uid_string);
             name.setText(name_string);
             gender.setText(gender_string);
             year_of_birth.setText(yob_string);
+            address.setText(address_string);
+            pincode.setText(pincode_string);
         }
     }
 
@@ -172,7 +181,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         String year_string=yearS.getSelectedItem().toString();
         String email=email_id.getText().toString();
 
-        final StudentDetails sd=new StudentDetails(name_string,gender_string,birthday_string,address_string,course_string,year_string,email);
+        final StudentDetails sd=new StudentDetails(name_string,gender_string,birthday_string,address_string,pincode_string,course_string,year_string,email);
 
         db_uid.set(sd).
                 addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -36,7 +36,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
     private FirebaseFirestore con_db;
     private CollectionReference db_concessionDetails;
 
-    private DatabaseHelper myDB;
+    private DatabaseHelper myDB = new DatabaseHelper(ConcessionFillActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

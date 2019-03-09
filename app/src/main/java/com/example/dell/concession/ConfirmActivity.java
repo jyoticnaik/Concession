@@ -25,8 +25,8 @@ import java.util.Map;
 
 public class ConfirmActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView name,gender,dob,address,course,year,emailid,passint,dest,source,ppsd,pped,cond;
-    private String name_string,gender_string,dob_string,address_string,course_string,year_string,
+    private TextView name,gender,dob,address,pincode,course,year,emailid,passint,dest,source,ppsd,pped,cond;
+    private String name_string,gender_string,dob_string,address_string,pincode_string,course_string,year_string,
             emailid_string,passint_string,dest_string,source_string,ppsd_string,pped_string,cond_string;
 
     private Button cancle,confirm;
@@ -36,7 +36,7 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
     private DocumentReference db_uid;
     private CollectionReference confirm_db;
 
-    private DatabaseHelper myDB;
+    private DatabaseHelper myDB = new DatabaseHelper(ConfirmActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
         gender=findViewById(R.id.gender_textview);
         dob=findViewById(R.id.birthdate_textview);
         address=findViewById(R.id.address_textview);
+        pincode=findViewById(R.id.pincode_textview);
         course=findViewById(R.id.course_textview);
         year=findViewById(R.id.year_textview);
         emailid=findViewById(R.id.email_textview);
@@ -82,6 +83,7 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
                             gender_string=documentSnapshot.getString("gender");
                             dob_string=documentSnapshot.getString("date_of_birth");
                             address_string=documentSnapshot.getString("address");
+                            pincode_string=documentSnapshot.getString("pincode");
                             course_string=documentSnapshot.getString("course");
                             year_string=documentSnapshot.getString("year");
                             emailid_string=documentSnapshot.getString("email");
@@ -125,7 +127,8 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
         gender.setText(gender_string);
         dob.setText(dob_string);
         address.setText(address_string);
-        course.setText(cond_string);
+        pincode.setText(pincode_string);
+        course.setText(course_string);
         year.setText(year_string);
         emailid.setText(emailid_string);
         passint.setText(passint_string);

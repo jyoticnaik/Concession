@@ -15,6 +15,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String NAME="name";
     public static final String GENDER="gender";
     public static final String YEAR_OF_BIRTH="year_of_birth";
+    public static final String ADDRESS="address";
+    public static final String PINCODE="pincode";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -27,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +   ","+NAME
                 +   ","+GENDER
                 +   ","+YEAR_OF_BIRTH
+                +   ","+ADDRESS
+                +   ","+PINCODE
                 +   ")";
         db.execSQL(createTable);
     }
@@ -37,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String uid,String name, String gender,String yob){
+    public boolean insertData(String uid,String name, String gender,String yob,String address,String pincode){
         SQLiteDatabase db=this.getWritableDatabase();
 
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
@@ -48,6 +52,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(NAME,name);
         contentValues.put(GENDER,gender);
         contentValues.put(YEAR_OF_BIRTH,yob);
+        contentValues.put(ADDRESS,address);
+        contentValues.put(PINCODE,pincode);
 
         long result = db.insert(TABLE_NAME,null,contentValues);
         if(result == -1)
