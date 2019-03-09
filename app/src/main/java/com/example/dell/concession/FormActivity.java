@@ -2,6 +2,7 @@ package com.example.dell.concession;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -37,12 +38,14 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     private Spinner courseS,yearS;
 
     //For dateofbirth
-    private EditText birthdate;
+    private TextView birthdate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore con_db;
     private CollectionReference db_studentDetails;
+
+    private DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +60,19 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, LoginPage.class));
 
         }
-        con_db= FirebaseFirestore.getInstance();
-        db_studentDetails=con_db.collection("Students");
 
-        //for birthdate
-        birthdate=findViewById(R.id.birthdate_edittext);    // <-
-                                                            //   |
-        uid=findViewById(R.id.uid_edittext);                //   |
-        name=findViewById(R.id.name_edittext);              //   |
-        gender=findViewById(R.id.gender_edittext);          //   |
-        year_of_birth=findViewById(R.id.yob_edittext);      //   |
-        //date of birth declared at the top of onCreate()       -
+        uid=findViewById(R.id.uid_edittext);
+        name=findViewById(R.id.name_edittext);
+        gender=findViewById(R.id.gender_edittext);
+        year_of_birth=findViewById(R.id.yob_edittext);
+        birthdate=findViewById(R.id.dob_textview);
+        birthdate_Code();
         address=findViewById(R.id.address_edittext);
+
 
         email_id=findViewById(R.id.email_edittext);
         email_id.setText(firebaseAuth.getCurrentUser().getEmail());
+
 
         save_detail=findViewById(R.id.save_details);
 
@@ -85,25 +86,58 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         courseS.setAdapter(courseAdapter);
         yearS.setAdapter(yearAdapter);
 
+        //Filling scanned data into fields.
+        autoFillEditText();
 
-        Bundle bundle = this.getIntent().getExtras();
-        assert bundle != null;
-        uid_string = bundle.getString("u_id");
-        name_string=bundle.getString("name");
-        gender_string=bundle.getString("gender");
-        yob_string=bundle.getString("yob");
+        save_detail.setOnClickListener(this);
+    }
 
-        if(TextUtils.isEmpty(uid_string) || TextUtils.isEmpty(name_string) || TextUtils.isEmpty(gender_string) || TextUtils.isEmpty(yob_string)){
+    public void birthdate_Code(){
+        birthdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal=Calendar.getInstance();
+                int month=cal.get(Calendar.MONTH);
+                int day=cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog=new DatePickerDialog(FormActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener,
+                        Integer.parseInt(yob_string),month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+            }
+        });
+
+        dateSetListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date=dayOfMonth+"/"+month+"/"+year;
+                birthdate.setText(date);
+            }
+        };
+    }
+
+    public void autoFillEditText(){
+        Cursor res = myDB.getAllData();
+        if(res.getCount() == 0){
             Toast.makeText(this, "Aadhaar Card not yet scanned.", Toast.LENGTH_SHORT).show();
+            uid.setText(R.string.NA);
+            name.setText(R.string.NA);
+            gender.setText(R.string.NA);
+            year_of_birth.setText(R.string.NA);
         }
         else {
+            uid_string = res.getString(0);
+            name_string = res.getString(1);
+            gender_string = res.getString(2);
+            yob_string = res.getString(3);
+
             uid.setText(uid_string);
             name.setText(name_string);
             gender.setText(gender_string);
             year_of_birth.setText(yob_string);
         }
-
-        save_detail.setOnClickListener(this);
     }
 
     @Override
@@ -127,32 +161,32 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void saveProfile(){
+
+        con_db= FirebaseFirestore.getInstance();
+        db_studentDetails=con_db.collection("Students");
+        DocumentReference db_uid=db_studentDetails.document(uid.getText().toString());
+
         String birthday_string=birthdate.getText().toString();
         String address_string=address.getText().toString();
         String course_string=courseS.getSelectedItem().toString();
         String year_string=yearS.getSelectedItem().toString();
         String email=email_id.getText().toString();
 
-        final StudentDetails sd=new StudentDetails(uid_string,name_string,gender_string,birthday_string,address_string,course_string,year_string,email);
+        final StudentDetails sd=new StudentDetails(name_string,gender_string,birthday_string,address_string,course_string,year_string,email);
 
-        db_studentDetails.add(sd)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        db_uid.set(sd).
+                addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("FormActivity","Student details added");
-                        sd.setId(documentReference.getId());
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(FormActivity.this, "Details saved successfully!", Toast.LENGTH_SHORT).show();
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("FormActivity","Error adding student details: "+e.getMessage());
-                    }
-                });
-    }
-
-    public void birthdateCode(){
-
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("FormActivity","Error while saving data: ",e);
+                Toast.makeText(FormActivity.this, "Saving Unsuccessfull! Error: "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -164,34 +198,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this,MainActivity.class));
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
-        }
-        if(v==birthdate){
-            birthdate.setOnClickListener(this);
-            dateSetListener=new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    String date=dayOfMonth+"/"+month+"/"+year;
-                    birthdate.setText(date);
-                }
-            };
-            Calendar cal=Calendar.getInstance();
-            int month=cal.get(Calendar.MONTH);
-            int day=cal.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog dialog=new DatePickerDialog(FormActivity.this,
-                    android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener,
-                    Integer.parseInt(yob_string),month,day);
-
-
-            try {
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-            catch (NullPointerException ne)
-            {
-                Log.d("FormActivity","setBackgroundDrawable may have produced null pointer exception");
-            }
-            //birthdateCode();
         }
     }
 }

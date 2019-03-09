@@ -4,14 +4,11 @@ import com.google.firebase.firestore.Exclude;
 
 public class StudentDetails {
 
-    @Exclude private String id;
-
-    private String uid,name,gender,date_of_birth,address,course,year,email;
+    private String name,gender,date_of_birth,address,course,year,email;
 
     public StudentDetails(){ }
 
-    public StudentDetails(String uid, String name, String gender, String date_of_birth, String address, String course, String year,String email) {
-        this.uid = uid;
+    public StudentDetails(String name, String gender, String date_of_birth, String address, String course, String year,String email) {
         this.name = name;
         this.gender = gender;
         this.date_of_birth = date_of_birth;
@@ -23,10 +20,6 @@ public class StudentDetails {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getUid() {
-        return uid;
     }
 
     public String getName() {
@@ -51,14 +44,6 @@ public class StudentDetails {
 
     public String getYear() {
         return year;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
 }

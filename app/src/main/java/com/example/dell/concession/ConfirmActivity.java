@@ -10,11 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +26,17 @@ import java.util.Map;
 public class ConfirmActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView name,gender,dob,address,course,year,emailid,passint,dest,source,ppsd,pped,cond;
+    private String name_string,gender_string,dob_string,address_string,course_string,year_string,
+            emailid_string,passint_string,dest_string,source_string,ppsd_string,pped_string,cond_string;
+
     private Button cancle,confirm;
 
     private FirebaseFirestore con_db;
+    private DocumentReference db_concessionDetails;
+    private DocumentReference db_uid;
     private CollectionReference confirm_db;
+
+    private DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +69,71 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void fillData(){
-        StudentDetails sd=new StudentDetails();
-        ConcessionDetails cd=new ConcessionDetails();
+        String uid_string = myDB.getUID();
+        db_uid = con_db.collection("Students").document(uid_string);
+        db_concessionDetails=db_uid.collection("ConcessionDetails").document("Details");
 
-        name.setText(sd.getName());
-        gender.setText(sd.getGender());
-        dob.setText(sd.getDate_of_birth());
-        address.setText(sd.getAddress());
-        course.setText(sd.getCourse());
-        year.setText(sd.getYear());
-        emailid.setText(sd.getEmail());
-        passint.setText(cd.getPass_interval());
-        dest.setText(cd.getDestination());
-        source.setText(cd.getSource());
-        ppsd.setText(cd.getPass_startDate());
-        pped.setText(cd.getPass_endDate());
-        cond.setText(cd.getCon_date());
+        db_uid.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists()){
+                            name_string=documentSnapshot.getString("name");
+                            gender_string=documentSnapshot.getString("gender");
+                            dob_string=documentSnapshot.getString("date_of_birth");
+                            address_string=documentSnapshot.getString("address");
+                            course_string=documentSnapshot.getString("course");
+                            year_string=documentSnapshot.getString("year");
+                            emailid_string=documentSnapshot.getString("email");
+                        }
+                        else {
+                            Toast.makeText(ConfirmActivity.this, "Details Does Not Exists!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ConfirmActivity","Error: ",e);
+                Toast.makeText(ConfirmActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        db_concessionDetails.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()) {
+                    passint_string = documentSnapshot.getString("pass_interval");
+                    dest_string = documentSnapshot.getString("destination");
+                    source_string = documentSnapshot.getString("source");
+                    ppsd_string = documentSnapshot.getString("pass_startDate");
+                    pped_string = documentSnapshot.getString("pass_endDate");
+                    cond_string = documentSnapshot.getString("con_date");
+                }
+                else {
+                    Toast.makeText(ConfirmActivity.this, "Details Does Not Exists!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ConfirmActivity","Error: ",e);
+                Toast.makeText(ConfirmActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        name.setText(name_string);
+        gender.setText(gender_string);
+        dob.setText(dob_string);
+        address.setText(address_string);
+        course.setText(cond_string);
+        year.setText(year_string);
+        emailid.setText(emailid_string);
+        passint.setText(passint_string);
+        dest.setText(dest_string);
+        source.setText(source_string);
+        ppsd.setText(ppsd_string);
+        pped.setText(pped_string);
+        cond.setText(cond_string);
     }
 
     @Override

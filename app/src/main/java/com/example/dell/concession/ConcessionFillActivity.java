@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,12 +28,15 @@ import java.util.Calendar;
 public class ConcessionFillActivity extends AppCompatActivity implements View.OnClickListener {
 
     Spinner pass_interval;
-    EditText destination,source,startDate,endDate,conDate;
+    EditText destination,source;
+    TextView startDate,endDate,conDate;
     Button next;
-    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private DatePickerDialog.OnDateSetListener dateSetListener1,dateSetListener2,dateSetListener3;
 
     private FirebaseFirestore con_db;
     private CollectionReference db_concessionDetails;
+
+    private DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +56,74 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         pass_interval.setAdapter(passint_adapter);
 
         //Calender using field
-        startDate=findViewById(R.id.startdate_edittext);
-        endDate=findViewById(R.id.enddate_edittext);
-        conDate=findViewById(R.id.condate_edittext);
+        startDate=findViewById(R.id.startDate_textview);
+        endDate=findViewById(R.id.endDate_textview);
+        conDate=findViewById(R.id.conDate_textview);
 
-        startDate.setOnClickListener(this);
-        endDate.setOnClickListener(this);
-        conDate.setOnClickListener(this);
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar=Calendar.getInstance();
+                int year=calendar.get(Calendar.YEAR);
+                int month=calendar.get(Calendar.MONTH);
+                int day=calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog=new DatePickerDialog(ConcessionFillActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,dateSetListener1,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        dateSetListener1=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month=month+1;//Reason: January starts with zero
+                String date=dayOfMonth+"/"+month+"/"+year;
+                startDate.setText(date);
+            }
+        };
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar=Calendar.getInstance();
+                int year=calendar.get(Calendar.YEAR);
+                int month=calendar.get(Calendar.MONTH);
+                int day=calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog=new DatePickerDialog(ConcessionFillActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,dateSetListener2,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        dateSetListener2=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month=month+1;//Reason: January starts with zero
+                String date=dayOfMonth+"/"+month+"/"+year;
+                endDate.setText(date);
+            }
+        };
+        conDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar=Calendar.getInstance();
+                int year=calendar.get(Calendar.YEAR);
+                int month=calendar.get(Calendar.MONTH);
+                int day=calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog=new DatePickerDialog(ConcessionFillActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,dateSetListener3,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        dateSetListener3=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month=month+1;//Reason: January starts with zero
+                String date=dayOfMonth+"/"+month+"/"+year;
+                conDate.setText(date);
+            }
+        };
         next.setOnClickListener(this);
     }
 
@@ -92,88 +158,38 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         return false;
     }
 
-    public void dateCode(){
-        Calendar cal=Calendar.getInstance();
-        int year=cal.get(Calendar.YEAR);
-        int month=cal.get(Calendar.MONTH);
-        int day=cal.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dialog=new DatePickerDialog(ConcessionFillActivity.this,
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener,
-                year,month,day);
-
-        try {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-        }
-        catch (NullPointerException ne)
-        {
-            Log.d("FormActivity","setBackgroundDrawable may have produced null pointer exception");
-        }
-    }
-
-
     public void saveData(){
-        String passInterval_string=pass_interval.getSelectedItem().toString();
-        String destination_string=destination.getText().toString();
-        String source_string=source.getText().toString();
-        String ppsd_string=startDate.getText().toString();
-        String pped_string=endDate.getText().toString();
-        String condate_string=conDate.getText().toString();
+        String passInterval_string = pass_interval.getSelectedItem().toString();
+        String destination_string = destination.getText().toString();
+        String source_string = source.getText().toString();
+        String ppsd_string = startDate.getText().toString();
+        String pped_string = endDate.getText().toString();
+        String condate_string = conDate.getText().toString();
 
         ConcessionDetails cd=new ConcessionDetails(passInterval_string,destination_string,source_string,ppsd_string,pped_string,condate_string);
-        String student_id=new StudentDetails().getId();
 
-        db_concessionDetails=con_db.collection("ConcessionDetails");
-        db_concessionDetails.add(cd)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("ConcessionFillActivity","Concession details added");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("ConcessionFillActivity","Error: "+e.getMessage());
-                    }
-                });
+        String uid_string = myDB.getUID();
+
+        DocumentReference db_uid = con_db.collection("Students").document(uid_string);
+
+        db_concessionDetails=db_uid.collection("ConcessionDetails");
+        DocumentReference db_condetail_nextlevel=db_concessionDetails.document("Details");
+        db_condetail_nextlevel.set(cd).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("ConcessionFillActivity","Success!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ConcessionFillActivity","Not Successful.");
+            }
+        });
     }
 
 
     @Override
     public void onClick(View v) {
-        if(v==startDate){
-            dateCode();
-            dateSetListener=new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    String date=dayOfMonth+"/"+month+"/"+year;
-                    startDate.setText(date);
-                }
-            };
-        }
-        if(v==endDate){
-            dateCode();
-            dateSetListener=new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    String date=dayOfMonth+"/"+month+"/"+year;
-                    endDate.setText(date);
-                }
-            };
-        }
-        if(v==conDate){
-            dateCode();
-            dateSetListener=new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    String date=dayOfMonth+"/"+month+"/"+year;
-                    conDate.setText(date);
-                }
-            };
-        }
-
         if (v==next){
             if(!hasValidationErrors(source.getText().toString(),startDate.getText().toString(),endDate.getText().toString(),conDate.getText().toString())) {
                 saveData();

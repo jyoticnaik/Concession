@@ -65,4 +65,6 @@
     <string name="cancle">CANCLE</string>
     <string name="confirm">CONFIRM</string>
 
+    <string name="NA">NOT AVAILABLE</string>
+
 </resources>

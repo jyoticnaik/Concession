@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button next_button,scan_button;
     private String uid=" Not Available ",name=" Not Available ",gender=" Not Available ",yearOfBirth=" Not Available ";
 
+    private DatabaseHelper myDB;
 
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
@@ -96,13 +97,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.initiateScan();
 
-        Intent i=new Intent(this,FormActivity.class)
+        /*Intent i=new Intent(this,FormActivity.class)
                 .putExtra("u_id",uid)
                 .putExtra("name",name)
                 .putExtra("gender",gender)
                 .putExtra("yob",yearOfBirth);
 
-        startActivity(i);
+        startActivity(i);*/
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
@@ -147,7 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if(eventType == XmlPullParser.START_DOCUMENT) {
                     Log.d("Rajdeol","Start document");
-                } else if(eventType == XmlPullParser.START_TAG && DataAttributes.AADHAAR_DATA_TAG.equals(parser.getName())) {
+                }
+                else if(eventType == XmlPullParser.START_TAG && DataAttributes.AADHAAR_DATA_TAG.equals(parser.getName())) {
                     // extract data from tag
                     //uid
                     uid = parser.getAttributeValue(null,DataAttributes.AADHAR_UID_ATTR);
@@ -158,16 +160,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // year of birth
                     yearOfBirth = parser.getAttributeValue(null,DataAttributes.AADHAR_YOB_ATTR);
 
-                    //saveData(uid,name,gender,yearOfBirth);
+                    addDataToDatabase();
 
-                    Intent i=new Intent(this,FormActivity.class)
-                            .putExtra("u_id",uid)
-                            .putExtra("name",name)
-                            .putExtra("gender",gender)
-                            .putExtra("yob",yearOfBirth);
-
-                    startActivity(i);
-
+                    startActivity(new Intent(MainActivity.this,FormActivity.class));
 
                 } else if(eventType == XmlPullParser.END_TAG) {
                     Log.d("MainActivity","End tag "+parser.getName());
@@ -187,6 +182,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void addDataToDatabase(){
+        boolean insertionSucessful = myDB.insertData(uid,name,gender,yearOfBirth);
+        if(insertionSucessful)
+            Log.d("addDataToDatabase()","INSERTION SUCCESSFUL");
+        else
+            Log.d("addDataToDatabase()","INSERTION UN-SUCCESSFUL");
+    }
     /*public void saveData(String uid,String name,String gender,String yearOfBirth){
         UserInformation userInformation=new UserInformation(uid,name,gender,yearOfBirth);
         rootref.child(user.getUid()).setValue(userInformation);

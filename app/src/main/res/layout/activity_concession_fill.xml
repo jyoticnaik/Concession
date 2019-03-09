@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ConcessionFillActivity"
     tools:ignore="contentDescription">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
     <ImageView
@@ -68,58 +72,55 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:columnCount="2"
-        android:rowCount="2"
+        android:rowCount="1"
         android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp">
 
         <TextView
-
+            android:height="38dp"
+            android:shadowColor="@color/extremeTransparent"
+            android:elevation="4dp"
+            android:paddingTop="10dp"
+            android:textAlignment="center"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/startDate_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/prestartdate"
-            />
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:background="@color/not_too_white"
+            android:text="@string/prestartdate" />
 
         <TextView
+            android:height="38dp"
+            android:shadowColor="@color/extremeTransparent"
+            android:elevation="4dp"
+            android:paddingTop="10dp"
+            android:textAlignment="center"
+            android:background="@color/not_too_white"
+            android:id="@+id/endDate_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/preenddate"
-
+            android:layout_columnWeight="1"
             />
 
-        <EditText
-            android:inputType="text"
-            android:id="@+id/startdate_edittext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            />
-
-        <EditText
-            android:inputType="text"
-            android:id="@+id/enddate_edittext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            />
     </GridLayout>
 
         <TextView
+            android:shadowColor="@color/extremeTransparent"
+            android:elevation="4dp"
+            android:paddingTop="10dp"
+            android:height="40dp"
+            android:textAlignment="center"
+            android:background="@color/not_too_white"
+            android:id="@+id/conDate_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/condate"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            />
-
-        <EditText
-            android:inputType="text"
-            android:id="@+id/condate_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             />
@@ -138,5 +139,6 @@
         android:layout_marginTop="30dp"/>
 
     </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+</RelativeLayout>
