@@ -25,12 +25,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable="create table " +TABLE_NAME
-                +   "("+UID
-                +   ","+NAME
-                +   ","+GENDER
-                +   ","+YEAR_OF_BIRTH
-                +   ","+ADDRESS
-                +   ","+PINCODE
+                +   "("+UID +" TEXT PRIMARY KEY"
+                +   ","+NAME+" TEXT"
+                +   ","+GENDER+" TEXT"
+                +   ","+YEAR_OF_BIRTH+" TEXT"
+                +   ","+ADDRESS+" TEXT"
+                +   ","+PINCODE+" TEXT"
                 +   ")";
         db.execSQL(createTable);
     }
@@ -68,9 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res1;
     }
 
-    public String getUID(){
+    public Cursor getUID(){
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor res2 = db.rawQuery("select "+UID+" from "+TABLE_NAME,null);
-        return res2.getString(0);
+        return res2;
     }
 }

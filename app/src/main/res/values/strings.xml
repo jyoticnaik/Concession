@@ -68,4 +68,8 @@
 
     <string name="NA">NOT AVAILABLE</string>
 
+    <!-- Menu -->
+    <string name="form">Form</string>
+    <string name="logout">Logout</string>
+
 </resources>

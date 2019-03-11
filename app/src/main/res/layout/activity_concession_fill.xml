@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
     <ImageView
+        android:layout_marginTop="20dp"
         android:layout_width="171dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
@@ -70,53 +71,45 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:columnCount="2"
-        android:rowCount="1"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-
         <TextView
-            android:height="38dp"
-            android:shadowColor="@color/extremeTransparent"
-            android:elevation="4dp"
-            android:paddingTop="10dp"
-            android:textAlignment="center"
-            android:layout_marginEnd="10dp"
             android:id="@+id/startDate_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_columnWeight="1"
-            android:background="@color/not_too_white"
-            android:text="@string/prestartdate" />
-
-        <TextView
-            android:height="38dp"
-            android:shadowColor="@color/extremeTransparent"
-            android:elevation="4dp"
-            android:paddingTop="10dp"
-            android:textAlignment="center"
-            android:background="@color/not_too_white"
-            android:id="@+id/endDate_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/preenddate"
-            android:layout_columnWeight="1"
-            />
-
-    </GridLayout>
-
-        <TextView
             android:shadowColor="@color/extremeTransparent"
             android:elevation="4dp"
             android:paddingTop="10dp"
             android:height="40dp"
             android:textAlignment="center"
             android:background="@color/not_too_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/prestartdate"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/endDate_textview"
+            android:shadowColor="@color/extremeTransparent"
+            android:elevation="4dp"
+            android:paddingTop="10dp"
+            android:height="40dp"
+            android:textAlignment="center"
+            android:background="@color/not_too_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preenddate"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            />
+
+        <TextView
             android:id="@+id/conDate_textview"
+            android:shadowColor="@color/extremeTransparent"
+            android:elevation="4dp"
+            android:paddingTop="10dp"
+            android:height="40dp"
+            android:textAlignment="center"
+            android:background="@color/not_too_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/condate"
@@ -129,14 +122,14 @@
         android:layout_gravity="bottom"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/next"
         android:text="@string/next"
-        android:background="@color/shadeMatching4"
+        android:background="@drawable/rect_btn"
         android:textColor="@color/not_too_white"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
     </ScrollView>

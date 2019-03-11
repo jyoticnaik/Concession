@@ -49,6 +49,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         signin.setOnClickListener(this);
         sigup.setOnClickListener(this);
         forgetpassword.setOnClickListener(this);
+
     }
 
     @Override
@@ -97,7 +98,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                         Toast.makeText(LoginPage.this, "Please Check your email.", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        String msg=task.getException().getLocalizedMessage();
+                        String msg=task.getException().getMessage();
                         Toast.makeText(LoginPage.this, "Error occure: "+msg, Toast.LENGTH_SHORT).show();
                     }
                 }

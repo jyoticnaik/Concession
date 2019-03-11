@@ -21,7 +21,11 @@
             android:text="@string/icon_text"
             android:textColor="#000000"
             android:textSize="50sp"
-            app:fontFamily="cursive" />
+            app:fontFamily="cursive"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="5"
+            android:shadowDy="10"
+            android:shadowRadius="10"/>
 
         <EditText
             android:id="@+id/emailidtxt"
@@ -39,15 +43,13 @@
             android:hint="@string/emailid"
             android:inputType="textEmailAddress"
             android:paddingStart="50dp"
-            android:paddingLeft="50dp"
             android:paddingEnd="0dp"
-            android:paddingRight="0dp"
             android:textColor="@color/shadeMatching1"
             android:textSize="16sp" />
 
         <EditText
             android:layout_width="335dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:textColor="@color/shadeMatching1"
             android:autofillHints="@string/password"
             android:hint="@string/password"
@@ -56,8 +58,6 @@
             android:id="@+id/passwordtxt"
             android:background="@drawable/passbck"
             android:paddingStart="50dp"
-            android:paddingLeft="50dp"
-            android:paddingRight="0dp"
             android:paddingEnd="0dp"
             android:layout_gravity="center"
             android:layout_marginStart="0dp"
@@ -70,7 +70,7 @@
 
         <EditText
             android:layout_width="335dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:textColor="@color/shadeMatching1"
             android:autofillHints="@string/cnfrmpass"
             android:hint="@string/cnfrmpass"
@@ -79,8 +79,6 @@
             android:id="@+id/cnfrmpasswordtxt"
             android:background="@drawable/passbck"
             android:paddingStart="50dp"
-            android:paddingLeft="50dp"
-            android:paddingRight="0dp"
             android:paddingEnd="0dp"
             android:layout_gravity="center"
             android:layout_marginStart="0dp"
@@ -92,7 +90,7 @@
             />
 
         <Button
-            android:background="@color/midaccentcolor"
+            android:background="@drawable/rect_btn"
             android:text="@string/register"
             android:textColor="@color/colorTransparentWhite"
             android:id="@+id/registerbtn"

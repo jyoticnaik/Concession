@@ -23,4 +23,5 @@
     <color name="shadeMatching7">#732C2C</color><!--Wine-->
     <color name="shadeMatching8">#420C14</color><!--Dark Seinna-->
     <color name="shadesaffron">#D9F4AC32</color><!--Saffron-->
+    <color name="tcolorPrimaryDark">#86013B33</color>
 </resources>

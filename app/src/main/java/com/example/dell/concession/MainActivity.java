@@ -3,6 +3,9 @@ package com.example.dell.concession;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -27,13 +35,18 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 
+import static android.graphics.Color.TRANSPARENT;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static boolean test=false;
+
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser user;
+    private FirebaseFirestore con_db;
     private Button next_button,scan_button;
     private String uid=" Not Available ",name=" Not Available ",gender=" Not Available ",yearOfBirth=" Not Available ";
-    private String address,pincode;
+    private String address,pincode,uid_string;
+    private boolean doesExist;
 
     private DatabaseHelper myDB=new DatabaseHelper(MainActivity.this);
 
@@ -43,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.appbar);
+        setSupportActionBar(toolbar);
 
         firebaseAuth=FirebaseAuth.getInstance();
 
@@ -55,16 +70,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        user=firebaseAuth.getCurrentUser();
 
         scan_button=findViewById(R.id.scan_aadhaar);
         next_button=findViewById(R.id.next_button);
 
-
         scan_button.setOnClickListener(this);
         next_button.setOnClickListener(this);
-
+        if(!test) {
+            next_button.setEnabled(test);
+            next_button.setAlpha((float) 0.25);
+        }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -97,14 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         integrator.setResultDisplayDuration(500);
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.initiateScan();
-
-        /*Intent i=new Intent(this,FormActivity.class)
-                .putExtra("u_id",uid)
-                .putExtra("name",name)
-                .putExtra("gender",gender)
-                .putExtra("yob",yearOfBirth);
-
-        startActivity(i);*/
 
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
@@ -175,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     addDataToDatabase(uid,name,gender,yearOfBirth,address,pincode);
 
+                    finish();
                     startActivity(new Intent(MainActivity.this,FormActivity.class));
 
                 } else if(eventType == XmlPullParser.END_TAG) {
@@ -217,8 +227,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
 
-        if(id==R.id.profile_menu){
-            startActivity(new Intent(this,FormActivity.class));
+        if(id==R.id.form_menu){
+           if(test)
+               startActivity(new Intent(this,FormActivity.class));
+           else
+               Toast.makeText(this, "First Scan the aadhar card!", Toast.LENGTH_SHORT).show();
         }
         if(id==R.id.logout_menu){
             FirebaseAuth.getInstance().signOut();

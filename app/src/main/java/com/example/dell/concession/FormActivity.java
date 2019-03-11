@@ -1,6 +1,7 @@
 package com.example.dell.concession;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -36,6 +37,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     private String uid_string,name_string,gender_string,yob_string,address_string,pincode_string;
     private Button save_detail;
     private Spinner courseS,yearS;
+
 
     //For dateofbirth
     private TextView birthdate;
@@ -156,8 +158,9 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private Boolean hasValidationErrors(String dob,String addr){
-        if(dob.isEmpty()){
+        if(dob.isEmpty() || dob.startsWith("D")){
             birthdate.setError("Date of Birth Required");
+            Toast.makeText(this, "Date of Birth Required", Toast.LENGTH_SHORT).show();
             birthdate.requestFocus();
             return true;
         }
@@ -166,11 +169,11 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             address.requestFocus();
             return true;
         }
+
         return false;
     }
 
     public void saveProfile(){
-
         con_db= FirebaseFirestore.getInstance();
         db_studentDetails=con_db.collection("Students");
         DocumentReference db_uid=db_studentDetails.document(uid.getText().toString());
@@ -181,6 +184,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         String year_string=yearS.getSelectedItem().toString();
         String email=email_id.getText().toString();
 
+
         final StudentDetails sd=new StudentDetails(name_string,gender_string,birthday_string,address_string,pincode_string,course_string,year_string,email);
 
         db_uid.set(sd).
@@ -188,6 +192,10 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(FormActivity.this, "Details saved successfully!", Toast.LENGTH_SHORT).show();
+                        finish();
+                        MainActivity.test = true;
+                        startActivity(new Intent(FormActivity.this,MainActivity.class));
+                        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -203,9 +211,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         if(v==save_detail){
             if(!hasValidationErrors(birthdate.getText().toString(),address.getText().toString())) {
                 saveProfile();
-                finish();
-                startActivity(new Intent(this,MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         }
     }

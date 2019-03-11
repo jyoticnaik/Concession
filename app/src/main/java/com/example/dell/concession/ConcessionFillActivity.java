@@ -2,6 +2,7 @@ package com.example.dell.concession;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -37,6 +38,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
     private CollectionReference db_concessionDetails;
 
     private DatabaseHelper myDB = new DatabaseHelper(ConcessionFillActivity.this);
+    String uid_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,18 +142,21 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
             source.requestFocus();
             return true;
         }
-        if (val_startdate.isEmpty()){
+        if (val_startdate.isEmpty() || val_startdate.startsWith("P")){
             startDate.setError("Previous pass start date required.");
+            Toast.makeText(this, "Previous pass start date required.", Toast.LENGTH_SHORT).show();
             startDate.requestFocus();
             return true;
         }
-        if(val_enddate.isEmpty()){
+        if(val_enddate.isEmpty() || val_enddate.startsWith("P")){
             endDate.setError("Previous pass end date required.");
+            Toast.makeText(this, "Previous pass end date required.", Toast.LENGTH_SHORT).show();
             endDate.requestFocus();
             return true;
         }
-        if(val_condate.isEmpty()){
+        if(val_condate.isEmpty() || val_condate.startsWith("C")){
             conDate.setError("Concession Date Required.");
+            Toast.makeText(this, "Concession date is required.", Toast.LENGTH_SHORT).show();
             conDate.requestFocus();
             return true;
         }
@@ -167,8 +172,15 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         String condate_string = conDate.getText().toString();
 
         ConcessionDetails cd=new ConcessionDetails(passInterval_string,destination_string,source_string,ppsd_string,pped_string,condate_string);
-
-        String uid_string = myDB.getUID();
+        
+        Cursor uid_cursor = myDB.getUID();
+        
+        if(uid_cursor.getCount() == 0){
+            Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+        }
+        while (uid_cursor.moveToNext()){
+            uid_string = uid_cursor.getString(0);
+        }
 
         DocumentReference db_uid = con_db.collection("Students").document(uid_string);
 
@@ -193,6 +205,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         if (v==next){
             if(!hasValidationErrors(source.getText().toString(),startDate.getText().toString(),endDate.getText().toString(),conDate.getText().toString())) {
                 saveData();
+                finish();
                 startActivity(new Intent(this, ConfirmActivity.class));
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
