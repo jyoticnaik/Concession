@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean doesExist;
 
     private DatabaseHelper myDB=new DatabaseHelper(MainActivity.this);
+    private DocumentReference confirm_db;
 
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         firebaseAuth=FirebaseAuth.getInstance();
+        con_db = FirebaseFirestore.getInstance();
 
         if (firebaseAuth.getCurrentUser()==null){
             //Checking if user has registered. If not then the scanning page will not be displayed.
@@ -90,10 +93,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (v==next_button){
-            startActivity(new Intent(this,ConcessionFillActivity.class));
-            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-        }
+            confirm_db = con_db.collection("Students").document("Confirmation");
+            confirm_db.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+                        Toast.makeText(MainActivity.this, "You Have Already Confirmed Your Concession!", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        startActivity(new Intent(MainActivity.this,ConcessionFillActivity.class));
+                        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
 
+                    startActivity(new Intent(MainActivity.this,ConcessionFillActivity.class));
+                    overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                }
+            });
+        }
     }
 
 

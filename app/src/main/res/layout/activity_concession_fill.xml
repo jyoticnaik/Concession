@@ -16,11 +16,13 @@
         android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/toplogo"
         android:layout_marginTop="20dp"
         android:layout_width="171dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/sndtlogo"/>
+        android:src="@drawable/sndtlogo"
+        android:transitionName="logoTrans"/>
 
     <TextView
         android:layout_width="match_parent"

@@ -1,11 +1,14 @@
 package com.example.dell.concession;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
 
+    private TextView headtxt;
     private TextView emailid;
     private TextView password;
     private TextView forgetpassword;
@@ -45,6 +49,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         forgetpassword=findViewById(R.id.fpasstxt);
         signin=findViewById(R.id.signinbtn);
         sigup=findViewById(R.id.signuptxt);
+        headtxt=findViewById(R.id.head_text);
 
         signin.setOnClickListener(this);
         sigup.setOnClickListener(this);
@@ -113,7 +118,13 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             userLogin();
         }
         if(v==sigup){
-            startActivity(new Intent(this,RegisterPage.class));
+            Intent i = new Intent(this,RegisterPage.class);
+            Pair[] pair = new Pair[2];
+            pair[0] = new Pair(headtxt,"headTrans");
+            pair[1] = new Pair(sigup,"sigupTrans");
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,
+                    pair);
+            startActivity(i,options.toBundle());
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         }
         if (v==forgetpassword){

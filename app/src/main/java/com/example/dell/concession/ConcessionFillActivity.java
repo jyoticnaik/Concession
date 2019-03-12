@@ -1,5 +1,6 @@
 package com.example.dell.concession;
 
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,11 +10,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +35,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
     EditText destination,source;
     TextView startDate,endDate,conDate;
     Button next;
+    ImageView imlogo;
     private DatePickerDialog.OnDateSetListener dateSetListener1,dateSetListener2,dateSetListener3;
 
     private FirebaseFirestore con_db;
@@ -51,6 +55,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         destination.setText(R.string.clgdest);
         source=findViewById(R.id.source_edittext);
         next=findViewById(R.id.next);
+        imlogo = findViewById(R.id.toplogo);
 
         //Code for dropdown list for pass interval
         pass_interval=findViewById(R.id.passint_spinner);
@@ -206,7 +211,10 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
             if(!hasValidationErrors(source.getText().toString(),startDate.getText().toString(),endDate.getText().toString(),conDate.getText().toString())) {
                 saveData();
                 finish();
-                startActivity(new Intent(this, ConfirmActivity.class));
+                Pair pair = new Pair(imlogo,"logoTrans");
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,
+                        pair);
+                startActivity(new Intent(this, ConfirmActivity.class),options.toBundle());
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         }

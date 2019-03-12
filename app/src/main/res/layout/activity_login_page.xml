@@ -16,6 +16,7 @@
     android:gravity="center_horizontal">
 
     <TextView
+        android:id="@+id/head_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -26,7 +27,8 @@
         android:shadowColor="@color/colorPrimaryDark"
         android:shadowDx="5"
         android:shadowDy="10"
-        android:shadowRadius="10"/>
+        android:shadowRadius="10"
+        android:transitionName="headTrans"/>
 
     <EditText
         android:id="@+id/emailidtxt"
@@ -89,7 +91,8 @@
         android:layout_marginBottom="0dp"
         android:textSize="14sp"
         android:layout_gravity="center"
-        android:elevation="4dp"/>
+        android:elevation="4dp"
+        />
     <TextView
         android:id="@+id/signuptxt"
         android:layout_width="wrap_content"
@@ -98,7 +101,8 @@
         android:text="@string/signup"
         android:textColor="#FFFFFF"
         android:layout_marginTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:transitionName="sigupTrans"/>
 
 </LinearLayout>
 </LinearLayout>
