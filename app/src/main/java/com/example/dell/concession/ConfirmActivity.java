@@ -149,14 +149,19 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
                     return;
                 }
 
-                if (documentSnapshot.exists()){
-                    passint.setText(documentSnapshot.getString("pass_interval"));
-                    dest.setText(documentSnapshot.getString("destination"));
-                    source.setText(documentSnapshot.getString("source"));
-                    ppsd.setText(documentSnapshot.getString("pass_startDate"));
-                    pped.setText(documentSnapshot.getString("pass_endDate"));
-                    cond.setText(documentSnapshot.getString("con_date"));
-                }else {
+                if (documentSnapshot != null) {
+                    if (documentSnapshot.exists()){
+                        passint.setText(documentSnapshot.getString("pass_interval"));
+                        dest.setText(documentSnapshot.getString("destination"));
+                        source.setText(documentSnapshot.getString("source"));
+                        ppsd.setText(documentSnapshot.getString("pass_startDate"));
+                        pped.setText(documentSnapshot.getString("pass_endDate"));
+                        cond.setText(documentSnapshot.getString("con_date"));
+                    }else {
+                        Toast.makeText(ConfirmActivity.this, "Document doesnot exists!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
                     Toast.makeText(ConfirmActivity.this, "Document doesnot exists!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -170,11 +175,21 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(this,MainActivity.class));
         }
         if(v==confirm) {
+
+            Cursor uid_cursor = myDB.getUID();
+
+            if(uid_cursor.getCount() == 0){
+                Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+            }
+            while (uid_cursor.moveToNext()){
+                uid_string = uid_cursor.getString(0);
+            }
+
             Boolean c = Boolean.TRUE;
             Map<String,Boolean> cn=new HashMap<>();
             cn.put("Confirmation",c);
 
-            confirm_db = con_db.collection("Students").document("Confirmation");
+            confirm_db = con_db.collection("Students").document(uid_string).collection("ConfirmationDetails").document("Confirmation");
             confirm_db.set(cn).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
