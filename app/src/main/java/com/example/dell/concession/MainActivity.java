@@ -35,6 +35,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.graphics.Color.TRANSPARENT;
 
@@ -93,7 +95,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (v==next_button){
-            confirm_db = con_db.collection("Students").document("Confirmation");
+            Cursor uid_cursor = myDB.getUID();
+
+            if(uid_cursor.getCount() == 0){
+                Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+            }
+            while (uid_cursor.moveToNext()){
+                uid_string = uid_cursor.getString(0);
+            }
+
+            confirm_db = con_db.collection("Students").document(uid_string).collection("ConfirmationDetails").document("Confirmation");
+
             confirm_db.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
