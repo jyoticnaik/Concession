@@ -31,7 +31,7 @@ import java.util.Calendar;
 
 public class ConcessionFillActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Spinner pass_interval;
+    Spinner pass_interval,train_class;
     EditText destination,source;
     TextView startDate,endDate,conDate;
     Button next;
@@ -61,6 +61,10 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         pass_interval=findViewById(R.id.passint_spinner);
         ArrayAdapter<String> passint_adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.passint_list));
         pass_interval.setAdapter(passint_adapter);
+
+        train_class = findViewById(R.id.trainclass_spinner);
+        ArrayAdapter<String> trainclass_adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.train_class));
+        train_class.setAdapter(trainclass_adapter);
 
         //Calender using field
         startDate=findViewById(R.id.startDate_textview);
@@ -170,13 +174,14 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
 
     public void saveData(){
         String passInterval_string = pass_interval.getSelectedItem().toString();
+        String trainClass_string = train_class.getSelectedItem().toString();
         String destination_string = destination.getText().toString();
         String source_string = source.getText().toString();
         String ppsd_string = startDate.getText().toString();
         String pped_string = endDate.getText().toString();
         String condate_string = conDate.getText().toString();
 
-        ConcessionDetails cd=new ConcessionDetails(passInterval_string,destination_string,source_string,ppsd_string,pped_string,condate_string);
+        ConcessionDetails cd=new ConcessionDetails(passInterval_string,trainClass_string,destination_string,source_string,ppsd_string,pped_string,condate_string);
         
         Cursor uid_cursor = myDB.getUID();
         

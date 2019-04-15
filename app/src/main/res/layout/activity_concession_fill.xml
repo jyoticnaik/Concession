@@ -10,130 +10,143 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/toplogo"
-        android:layout_marginTop="20dp"
-        android:layout_width="171dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/sndtlogo"
-        android:transitionName="logoTrans"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/passint"/>
-
-    <Spinner
-        android:id="@+id/passint_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/dest"/>
-
-    <EditText
-        android:id="@+id/dest_edittext"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:enabled="false" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/source"/>
-
-    <EditText
-        android:inputType="text"
-        android:id="@+id/source_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp" />
-
-        <TextView
-            android:id="@+id/startDate_textview"
-            android:shadowColor="@color/extremeTransparent"
-            android:elevation="4dp"
-            android:paddingTop="10dp"
-            android:height="40dp"
-            android:textAlignment="center"
-            android:background="@color/not_too_white"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prestartdate"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/endDate_textview"
-            android:shadowColor="@color/extremeTransparent"
-            android:elevation="4dp"
-            android:paddingTop="10dp"
-            android:height="40dp"
-            android:textAlignment="center"
-            android:background="@color/not_too_white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/preenddate"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            />
+            <ImageView
+                android:id="@+id/toplogo"
+                android:layout_width="171dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/sndtlogo"
+                android:transitionName="logoTrans" />
 
-        <TextView
-            android:id="@+id/conDate_textview"
-            android:shadowColor="@color/extremeTransparent"
-            android:elevation="4dp"
-            android:paddingTop="10dp"
-            android:height="40dp"
-            android:textAlignment="center"
-            android:background="@color/not_too_white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/condate"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/passint" />
 
-    <Button
-        android:layout_gravity="bottom"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/next"
-        android:text="@string/next"
-        android:background="@drawable/rect_btn"
-        android:textColor="@color/not_too_white"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"/>
+            <Spinner
+                android:id="@+id/passint_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/trainclass" />
+
+            <Spinner
+                android:id="@+id/trainclass_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/dest" />
+
+            <EditText
+                android:id="@+id/dest_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:enabled="false"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/source" />
+
+            <EditText
+                android:id="@+id/source_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/startDate_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:height="40dp"
+                android:background="@color/not_too_white"
+                android:elevation="4dp"
+                android:paddingTop="10dp"
+                android:shadowColor="@color/extremeTransparent"
+                android:text="@string/prestartdate"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/endDate_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:height="40dp"
+                android:background="@color/not_too_white"
+                android:elevation="4dp"
+                android:paddingTop="10dp"
+                android:shadowColor="@color/extremeTransparent"
+                android:text="@string/preenddate"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/conDate_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:height="40dp"
+                android:background="@color/not_too_white"
+                android:elevation="4dp"
+                android:paddingTop="10dp"
+                android:shadowColor="@color/extremeTransparent"
+                android:text="@string/condate"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rect_btn"
+                android:text="@string/next"
+                android:textColor="@color/not_too_white" />
+
+        </LinearLayout>
     </ScrollView>
 
 </RelativeLayout>

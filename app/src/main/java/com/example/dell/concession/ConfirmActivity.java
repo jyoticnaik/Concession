@@ -32,9 +32,9 @@ import javax.annotation.Nullable;
 
 public class ConfirmActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView name,gender,dob,address,pincode,course,year,emailid,passint,dest,source,ppsd,pped,cond;
-        private String uid_string,name_string,gender_string,dob_string,address_string,pincode_string,course_string,year_string,
-            emailid_string,passint_string,dest_string,source_string,ppsd_string,pped_string,cond_string;
+    private TextView name,gender,dob,address,pincode,course,year,emailid,passint,trainclass,dest,source,ppsd,pped,cond;
+    private String uid_string,name_string,gender_string,dob_string,address_string,pincode_string,course_string,year_string,
+            emailid_string,passint_string,trainclass_string,dest_string,source_string,ppsd_string,pped_string,cond_string;
 
     private Button cancle,confirm;
 
@@ -62,6 +62,7 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
         year=findViewById(R.id.year_textview);
         emailid=findViewById(R.id.email_textview);
         passint=findViewById(R.id.passint_textview);
+        trainclass = findViewById(R.id.train_class_textview);
         dest=findViewById(R.id.dest_textview);
         source=findViewById(R.id.source_textview);
         ppsd=findViewById(R.id.ppsd_textview);
@@ -77,6 +78,7 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
         year.setTextColor(R.color.shadeMatching1);
         emailid.setTextColor(R.color.shadeMatching1);
         passint.setTextColor(R.color.shadeMatching1);
+        trainclass.setTextColor(R.color.shadeMatching1);
         dest.setTextColor(R.color.shadeMatching1);
         source.setTextColor(R.color.shadeMatching1);
         ppsd.setTextColor(R.color.shadeMatching1);
@@ -152,6 +154,7 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
                 if (documentSnapshot != null) {
                     if (documentSnapshot.exists()){
                         passint.setText(documentSnapshot.getString("pass_interval"));
+                        trainclass.setText(documentSnapshot.getString("train_class"));
                         dest.setText(documentSnapshot.getString("destination"));
                         source.setText(documentSnapshot.getString("source"));
                         ppsd.setText(documentSnapshot.getString("pass_startDate"));

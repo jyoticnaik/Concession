@@ -42,6 +42,10 @@
         <item>BSC</item>
         <item>MSC</item>
     </string-array>
+    <string-array name="train_class">
+        <item>First Class</item>
+        <item>Second Class</item>
+    </string-array>
 
     <string-array name="year_list">
         <item>FY</item>
@@ -51,6 +55,7 @@
 
     <!--ConcessionFillActivity-->
     <string name="passint">Pass Interval</string>
+    <string name="trainclass">Train Class</string>
     <string-array name="passint_list">
         <item>Monthly</item>
         <item>Quaterly</item>
