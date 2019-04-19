@@ -132,7 +132,7 @@ public class ConfirmActivity extends AppCompatActivity implements View.OnClickLi
                     address.setText(documentSnapshot.getString("address"));
                     pincode.setText(documentSnapshot.getString("pincode"));
                     course.setText(documentSnapshot.getString("course"));
-                    year.setText(documentSnapshot.getString("year"));
+                    year.setText(documentSnapshot.getString("semester"));
                     emailid.setText(documentSnapshot.getString("email"));
 
                     Log.d("ConfirmActivity",source + " data: " + documentSnapshot.getData());

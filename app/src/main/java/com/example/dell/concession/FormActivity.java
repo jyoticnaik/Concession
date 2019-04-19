@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -79,7 +80,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         save_detail=findViewById(R.id.save_details);
 
         courseS=findViewById(R.id.course_spinner);
-        yearS=findViewById(R.id.year_spinner);
+        yearS=findViewById(R.id.sem_spinner);
         ArrayAdapter<String> courseAdapter=new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.course_list));
 
@@ -181,11 +182,11 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         String birthday_string=birthdate.getText().toString();
         String address_string=address.getText().toString();
         String course_string=courseS.getSelectedItem().toString();
-        String year_string=yearS.getSelectedItem().toString();
+        String sem_string=yearS.getSelectedItem().toString();
         String email=email_id.getText().toString();
 
 
-        final StudentDetails sd=new StudentDetails(name_string,gender_string,birthday_string,address_string,pincode_string,course_string,year_string,email);
+        final StudentDetails sd=new StudentDetails(name_string,gender_string,birthday_string,address_string,pincode_string,course_string,sem_string,email);
 
         db_uid.set(sd).
                 addOnSuccessListener(new OnSuccessListener<Void>() {

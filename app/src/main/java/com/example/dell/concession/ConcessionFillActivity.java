@@ -2,6 +2,7 @@ package com.example.dell.concession;
 
 import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -25,9 +26,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Calendar;
+
+import javax.annotation.Nullable;
 
 public class ConcessionFillActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,10 +45,13 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
     private DatePickerDialog.OnDateSetListener dateSetListener1,dateSetListener2,dateSetListener3;
 
     private FirebaseFirestore con_db;
+    DocumentReference db_uid;
     private CollectionReference db_concessionDetails;
 
     private DatabaseHelper myDB = new DatabaseHelper(ConcessionFillActivity.this);
     String uid_string;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +74,7 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
         train_class = findViewById(R.id.trainclass_spinner);
         ArrayAdapter<String> trainclass_adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.train_class));
         train_class.setAdapter(trainclass_adapter);
+
 
         //Calender using field
         startDate=findViewById(R.id.startDate_textview);
@@ -136,6 +146,56 @@ public class ConcessionFillActivity extends AppCompatActivity implements View.On
             }
         };
         next.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Logging User... please wait");
+        progressDialog.show();
+
+        Cursor uid_cursor = myDB.getUID();
+
+        if (uid_cursor.getCount() == 0) {
+            Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+        }
+        while (uid_cursor.moveToNext()) {
+            uid_string = uid_cursor.getString(0);
+        }
+
+        try {
+            db_uid = con_db.collection("Students").document(uid_string);
+        } catch (Exception e) {
+            Log.d("ComfirmationActivity", e.getMessage());
+        }
+
+
+        db_uid.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Toast.makeText(ConcessionFillActivity.this, "Error while loading!", Toast.LENGTH_SHORT).show();
+                    Log.d("ComfirmationActivity", e.toString());
+                    return;
+                }
+
+                String source = documentSnapshot != null && documentSnapshot.getMetadata().hasPendingWrites()
+                        ? "Local" : "Server";
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    String  sem = documentSnapshot.getString("semester").trim();
+                    if (sem.equals("Sem VI")){
+                        progressDialog.dismiss();
+                        destination.setEnabled(true);
+                    }
+
+                    Log.d("ConcessionFillActivity", source + " data: " + documentSnapshot.getData());
+                } else {
+                    Toast.makeText(ConcessionFillActivity.this, "Document doesnot exists!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

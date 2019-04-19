@@ -53,6 +53,15 @@
         <item>TY</item>
     </string-array>
 
+    <string-array name="sem_list">
+        <item>Sem I</item>
+        <item>Sem II</item>
+        <item>Sem III</item>
+        <item>Sem IV</item>
+        <item>Sem V</item>
+        <item>Sem VI</item>
+    </string-array>
+
     <!--ConcessionFillActivity-->
     <string name="passint">Pass Interval</string>
     <string name="trainclass">Train Class</string>
@@ -66,6 +75,7 @@
     <string name="preenddate">Previous Pass End Date</string>
     <string name="condate">Concession Date</string>
     <string name="clgdest">Santacruz</string>
+    <string name="sem">Semester</string>
 
     <!--ConfirmActivity-->
     <string name="cancle">CANCLE</string>
