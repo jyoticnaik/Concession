@@ -62,6 +62,13 @@
         <item>Sem VI</item>
     </string-array>
 
+    <string-array name="sem_list1">
+        <item>Sem I</item>
+        <item>Sem II</item>
+        <item>Sem III</item>
+        <item>Sem IV</item>
+    </string-array>
+
     <!--ConcessionFillActivity-->
     <string name="passint">Pass Interval</string>
     <string name="trainclass">Train Class</string>

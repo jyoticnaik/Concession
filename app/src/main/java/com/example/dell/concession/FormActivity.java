@@ -1,5 +1,6 @@
 package com.example.dell.concession;
 
+import android.R.layout;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -32,6 +33,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 
+import static android.R.layout.simple_spinner_dropdown_item;
+
 public class FormActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText uid,name,gender,year_of_birth,address,pincode,email_id;
@@ -47,6 +50,8 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore con_db;
     private CollectionReference db_studentDetails;
+
+    ArrayAdapter<String> semAdapter1;
 
     private DatabaseHelper myDB = new DatabaseHelper(FormActivity.this);
 
@@ -82,13 +87,40 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         courseS=findViewById(R.id.course_spinner);
         yearS=findViewById(R.id.sem_spinner);
         ArrayAdapter<String> courseAdapter=new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.course_list));
+                simple_spinner_dropdown_item, getResources().getStringArray(R.array.course_list));
 
-        ArrayAdapter<String> yearAdapter=new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.year_list));
+        ArrayAdapter<String> semAdapter=new ArrayAdapter<>(this,
+                simple_spinner_dropdown_item, getResources().getStringArray(R.array.sem_list));
         courseS.setAdapter(courseAdapter);
-        yearS.setAdapter(yearAdapter);
+        yearS.setAdapter(semAdapter);
 
+        semAdapter1=new ArrayAdapter<>(this,
+                simple_spinner_dropdown_item, getResources().getStringArray(R.array.sem_list1));
+
+        courseS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String sel_course = parent.getItemAtPosition(position).toString();
+                if(sel_course.equals("MSC")){
+                    yearS.setAdapter(semAdapter1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+//        courseS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String sel_course = parent.getSelectedItem().toString();
+//                if(sel_course.equals("MSC")){
+//                    yearS.setAdapter(semAdapter1);
+//                }
+//            }
+//        });
         //Filling scanned data into fields.
         autoFillEditText();
 

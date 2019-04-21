@@ -1,6 +1,7 @@
 package com.example.dell.concession;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -25,7 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -38,7 +41,10 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import static android.graphics.Color.TRANSPARENT;
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (firebaseAuth.getCurrentUser()==null){
             //Checking if user has registered. If not then the scanning page will not be displayed.
             finish();
-            Toast.makeText(this, "Please Login First!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Login First!", LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginPage.class));
             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
@@ -87,8 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    @Override
+       @Override
     public void onClick(View v) {
         if(v==scan_button){
             scan_aadhaar_click();
@@ -98,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Cursor uid_cursor = myDB.getUID();
 
             if(uid_cursor.getCount() == 0){
-                Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Empty", LENGTH_SHORT).show();
             }
             while (uid_cursor.moveToNext()){
                 uid_string = uid_cursor.getString(0);
@@ -163,12 +168,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(scanContent != null && !scanContent.isEmpty()){
                 processScannedData(scanContent);
             }else{
-                Toast toast = Toast.makeText(getApplicationContext(),"Scan Cancelled", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(),"Scan Cancelled", LENGTH_SHORT);
                 toast.show();
             }
 
         }else{
-            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", LENGTH_SHORT);
             toast.show();
         }
     }
@@ -251,26 +256,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.nav_items,menu);
-        return true;
+            return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
+            Log.d("EEEEEEEEEEEEEEEEEEEWWW", " " + item.getItemId());
+            int id = item.getItemId();
 
-        if(id==R.id.form_menu){
-           if(test)
-               startActivity(new Intent(this,FormActivity.class));
-           else
-               Toast.makeText(this, "First Scan the aadhar card!", Toast.LENGTH_SHORT).show();
-        }
-        if(id==R.id.logout_menu){
-            FirebaseAuth.getInstance().signOut();
-            finish();
-            startActivity(new Intent(this,LoginPage.class));
-        }
-
+            if (id == R.id.form_menu) {
+                if (test)
+                    startActivity(new Intent(this, FormActivity.class));
+                else
+                    Toast.makeText(this, "First Scan the aadhar card!", Toast.LENGTH_SHORT).show();
+            }
+            if (id == R.id.logout_menu) {
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(this, LoginPage.class));
+            }
         return true;
     }
 }
